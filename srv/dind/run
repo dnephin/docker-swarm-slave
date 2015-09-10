@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/dind docker daemon -H 0.0.0.0:$DOCKER_PORT $DOCKER_ARGS
