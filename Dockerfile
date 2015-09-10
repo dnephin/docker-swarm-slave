@@ -1,24 +1,25 @@
-# Dockerfile for building Docker
-FROM debian:jessie
+FROM    alpine:edge
 
-# compile and runtime deps
-# https://github.com/docker/docker/blob/master/project/PACKAGERS.md#runtime-dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        iptables \
-        procps \
-        e2fsprogs \
-        xz-utils \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN     apk -U add \
+            ca-certificates \
+            curl \
+            e2fsprogs \
+            iptables \
+            lxc
 
-ENV VERSION 1.7.1
-RUN curl -L -o /usr/local/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-${VERSION} \
-    && chmod +x /usr/local/bin/docker
+ENV     VERSION 1.8.1
+ENV     SWARM_VERSION latest
 
-RUN curl -L -o /dind https://raw.githubusercontent.com/docker/docker/master/hack/dind \
-    && chmod +x /dind
+#        procps \
+
+RUN     curl -L -o /usr/local/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-${VERSION} \
+        && chmod +x /usr/local/bin/docker
+
+RUN     curl -L -o /dind https://raw.githubusercontent.com/docker/docker/master/hack/dind \
+        && chmod +x /dind
+
+COPY    start.sh /opt/start.sh
 
 VOLUME /var/lib/docker
 
-ENTRYPOINT ["/dind"]
+ENTRYPOINT ["sh", "/opt/start.sh"]
