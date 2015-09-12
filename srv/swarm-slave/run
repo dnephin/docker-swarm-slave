@@ -12,13 +12,11 @@ if [ -z "$discovery_ip" ]; then
     exit 1
 fi
 
-# Wait for docker daemon to be available
-while [ -z "$(docker ps 2> /dev/null)" ]; do
-    sleep 0.2
-done
+export DOCKER_HOST=tcp://localhost:$DOCKER_PORT
+timeout -t 30 /wait_on_daemon
 
 # Start swarm slave
-DOCKER_HOST=tcp://localhost:$DOCKER_PORT docker run \
+docker run \
     --add-host $discovery_host:$discovery_ip \
     --env SWARM_DISCOVERY \
     swarm:$SWARM_VERSION join \
