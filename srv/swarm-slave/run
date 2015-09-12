@@ -1,6 +1,5 @@
 #!/bin/sh
-
-set -ex
+set -e
 
 host=$(hostname -i)
 discovery_host=discovery
@@ -8,9 +7,15 @@ discovery_host=discovery
 # Get the ip address of the discovery service, so it can be passed to the
 # swarm slave container
 discovery_ip=$(getent hosts $discovery_host| awk '{ print $1 }' | head -1)
+if [ -z "$discovery_ip" ]; then
+    >&2 echo "discovery host not found."
+    exit 1
+fi
 
-# TODO: poll instead of sleep
-sleep 2
+# Wait for docker daemon to be available
+while [ -z "$(docker ps 2> /dev/null)" ]; do
+    sleep 0.2
+done
 
 # Start swarm slave
 DOCKER_HOST=tcp://localhost:$DOCKER_PORT docker run \
