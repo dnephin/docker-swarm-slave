@@ -1,3 +1,6 @@
 #!/bin/sh
-set -ex
-/dind docker daemon -H 0.0.0.0:$DOCKER_PORT $DOCKER_ARGS
+set -x
+/dind docker daemon \
+    -H unix:///var/run/docker.sock \
+    -H 0.0.0.0:$DOCKER_PORT \
+    $DOCKER_ARGS

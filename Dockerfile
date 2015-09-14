@@ -21,6 +21,7 @@ COPY    srv /srv
 COPY    wait_on_daemon /wait_on_daemon
 
 ENV     SWARM_VERSION latest
+ENV     MESOS_VERSION latest
 ENV     DOCKER_PORT 2375
 
 VOLUME  /var/lib/docker

@@ -1,9 +1,6 @@
 #!/bin/sh
 set -e
 
-# TODO:
-exit
-
 host=$(hostname -i)
 discovery_host=discovery
 
@@ -18,9 +15,10 @@ fi
 export DOCKER_HOST=tcp://localhost:$DOCKER_PORT
 timeout -t 30 /wait_on_daemon
 
-# Start swarm slave
+# Start mesos slave
+set -x
 docker run \
     --add-host $discovery_host:$discovery_ip \
-    --env SWARM_DISCOVERY \
-    swarm:$SWARM_VERSION join \
-    --addr=$host:$DOCKER_PORT
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    dnephin/docker-mesos:$MESOS_VERSION \
+    slave --master=zk://discovery:2181/mesos

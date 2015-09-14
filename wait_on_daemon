@@ -1,6 +1,5 @@
 #!/bin/sh
-# Wait for docker daemon to be available
 echo "Waiting for docker daemon to become available at $DOCKER_HOST"
-while [ -z "$(docker ps)" ]; do
+while [ -z "$(docker ps 2>/dev/null)" ]; do
     sleep 0.3
 done
