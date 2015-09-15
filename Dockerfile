@@ -20,8 +20,7 @@ RUN     curl -L -o /dind https://raw.githubusercontent.com/docker/docker/master/
 COPY    srv /srv
 COPY    wait_on_daemon /wait_on_daemon
 
-ENV     SWARM_VERSION latest
-ENV     MESOS_VERSION latest
+ENV     MESOS_VERSION slave
 ENV     DOCKER_PORT 2375
 
 VOLUME  /var/lib/docker

@@ -1,4 +1,0 @@
-#!/bin/sh
-# TODO
-exit
-s6-svscanctl -t /srv
