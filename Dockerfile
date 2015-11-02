@@ -10,7 +10,7 @@ RUN     apk -U add \
             s6 \
             xz
 
-ENV     VERSION 1.9.0-rc3
+ENV     VERSION 1.9.0-rc4
 RUN     curl -L -o /usr/local/bin/docker https://test.docker.com/builds/Linux/x86_64/docker-${VERSION} \
         && chmod +x /usr/local/bin/docker
 
