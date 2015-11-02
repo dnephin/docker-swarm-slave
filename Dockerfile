@@ -10,8 +10,8 @@ RUN     apk -U add \
             s6 \
             xz
 
-ENV     VERSION 1.9.0-rc4
-RUN     curl -L -o /usr/local/bin/docker https://test.docker.com/builds/Linux/x86_64/docker-${VERSION} \
+ENV     VERSION 1.9.0
+RUN     curl -L -o /usr/local/bin/docker https://get.docker.com/builds/Linux/x86_64/docker-${VERSION} \
         && chmod +x /usr/local/bin/docker
 
 RUN     curl -L -o /dind https://raw.githubusercontent.com/docker/docker/master/hack/dind \

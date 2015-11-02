@@ -1,3 +1,10 @@
 #!/bin/sh
 set -ex
-/dind docker daemon -H 0.0.0.0:$DOCKER_PORT $DOCKER_ARGS
+
+host=$(hostname -i)
+
+/dind docker daemon \
+    -H 0.0.0.0:$DOCKER_PORT \
+    --cluster-store ${SWARM_DISCOVERY}networks \
+    --cluster-advertise $host:$DOCKER_PORT \
+    $DOCKER_ARGS
