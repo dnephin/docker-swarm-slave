@@ -1,0 +1,5 @@
+#!/bin/sh
+echo "Waiting for discovery service to become available."
+while [ "$(ping -c 2 discovery > /dev/null; echo $?)" != "0" ]; do
+    sleep 0.3
+done

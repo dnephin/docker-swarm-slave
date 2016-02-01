@@ -1,7 +1,10 @@
 #!/bin/sh
 set -ex
 
-host=$(hostname -i)
+# TODO: can this be removed with networks?
+host=$(hostname -i | awk '{print $1}')
+
+timeout -t 30 /wait_on_discovery
 
 /dind docker daemon \
     -H 0.0.0.0:$DOCKER_PORT \
